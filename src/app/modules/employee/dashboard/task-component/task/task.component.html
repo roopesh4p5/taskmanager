@@ -1,0 +1,177 @@
+<div *ngIf="allTasks.length != 0">
+  <h3 class="empty-state-text">There are no tasks here! Click the add button to create
+    a new task.</h3>
+  <button class="add-btn" (click)="openModal(content)">
+    Add Newtask
+  </button>
+  <button class="add-btn">
+    Add Newtask
+  </button>
+
+</div>
+<div *ngIf="allTasks.length != 0">
+  <div class="header mb-3">TaskList</div>
+  <table class="table table-bordered table-hover ">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Task</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of allTasks">
+        <td scope="row">{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td style="color : green">{{ task.status}}</td>
+        <td><i class="fa fa-edit edit-icon" (click)="openUpdate(task)">&nbsp; </i> &nbsp; &nbsp;<i class="fa fa-trash remove"
+            (click)="deleteTask(task.id)">&nbsp; </i> </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="popup">
+  <ng-template #content let-modal>
+    <div class="task">
+      <div class="cross-btn">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">AddTask</h4>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="taskForm" (ngSubmit)="addTask()" >
+        <div class="mb-3">
+          <label for="title" class="form-label">TaskName</label>
+          <div class="input-field">
+            <input 
+            id="title"  
+            type="text"
+            class="form-control"
+            placeholder="Enter your title"
+            formControlName="title"
+            [ngClass]="{
+              errorBorder:
+                  taskForm.controls['title'].errors
+            }" 
+            required
+            >
+          </div>
+          <div
+            *ngIf=""
+          >
+            <small class="danger">Title is required</small>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="description">Description</label>
+          <div class="input-field">
+            <input 
+            id="description"
+            type="text" 
+            class="form-control"
+            placeholder="Enter your description"
+            formControlName="description" 
+            [ngClass]="{
+              errorBorder:
+                  taskForm.controls['description'].errors
+              }" 
+            required
+            >
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="status">Status</label>
+          <div class="input-field">
+            <input 
+            id="status"
+            type="text" 
+            class="form-control"
+            placeholder="Enter your status"
+            formControlName="status" 
+            [ngClass]="{
+              errorBorder:
+                  taskForm.controls['status'].errors
+            }" 
+            required
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn close-btn" (click)="modal.dismiss('Cross click')">
+        Close
+      </button>
+      <button type="button" class="btn send-btn" [disabled]="taskForm.invalid" (click)="addTask()">
+        Submit
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<div class="popup" *ngIf="selectedTask">
+  <ng-template #editInfoModal let-modal>
+    <div class="task">
+      <div class="cross-btn">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">EditTask</h4>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="taskForm" (ngSubmit)="updateTask()" >
+        <div class="mb-3">
+          <label for="title" class="form-label">TaskName</label>
+          <div class="input-field">
+            <input 
+            id="title"  
+            type="text"
+            class="form-control"
+            placeholder="Enter your title"
+            formControlName="title"
+            >
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="description">Description</label>
+          <div class="input-field">
+            <input 
+            id="description"
+            type="text" 
+            class="form-control"
+            placeholder="Enter your description"
+            formControlName="description" 
+            >
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="status">Status</label>
+          <div class="input-field">
+            <input 
+            id="status"
+            type="text" 
+            class="form-control"
+            placeholder="Enter your status"
+            formControlName="status" 
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn close-btn" (click)="modal.dismiss('Cross click')">
+        Close
+      </button>
+      <button type="button" class="btn send-btn" [disabled]="taskForm.invalid" (click)="updateTask()">
+        Update Task
+      </button>
+    </div>
+  </ng-template>
+</div>
+

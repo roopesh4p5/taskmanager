@@ -1,0 +1,50 @@
+.add-btn {
+    border: 1px solid #059669;
+    background: white;
+    color: #059669;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 5px 30px;
+    border-radius: 5px;
+    margin-right: 30px;
+    width: 160px;
+    height: 40px;
+}
+.add-btn:hover {
+    background-color: #059669;
+    color :white;
+}
+h3 {
+    font-size: 26px; 
+    color: black; 
+}
+.header { 
+    font-size: 26px; 
+    color: black; 
+    margin-top: 30px;
+  }
+.edit-icon {
+    color : #059669;
+}
+.remove {
+    color: #ff7a74;
+}
+table {
+    thead {
+        tr {
+            th {
+                text-align: center;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                text-align: center;
+            }
+        }
+    }
+}
+.errorBorder{
+    border: solid 1px red;
+}

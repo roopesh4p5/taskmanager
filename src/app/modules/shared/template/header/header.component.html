@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
+    <a class="navbar-brand" href="#">
+            <img width="30" height="30" class="me-2" src="https://img.icons8.com/material-rounded/24/000000/commercial-development-management.png" alt="task-management" loading="lazy"/>
+        <small>TaskManager</small>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        (click)="toggleCollapsed()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup"
+        [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home<span class="sr-only"></span></a>
+            <a class="nav-item nav-link" href="#">Features</a>
+            <a class="nav-item nav-link" href="#">Resources</a>
+            <a class="nav-item nav-link" href="#">Dashboards</a>
+        </div>
+    </div>
+    <div class="d-flex align-items-center">
+        <button type="button" class="btn  px-3 me-2">
+            SignIn
+        </button>
+        <button type="button" class="btn btn-dark me-3">
+            GetStarted
+        </button>
+        <i class="fa fa-user fa-2x me-3" aria-hidden="true" (click)="open(content)"></i>
+        <!-- <button type="button" class="btn btn-warning" [routerLink]="['']" (click)="logout()">Logout</button> -->
+    </div>
+</nav>
+
+<ng-template #content let-offcanvas>
+	<div class="offcanvas-header">
+		<h4 class="offcanvas-title">Profile</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+	</div>
+	<div class="offcanvas-body">
+        <div class="list-group">
+            <a class="list-group-item" href="#"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a>
+            <a class="list-group-item" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; About</a>
+            <a class="list-group-item" href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>&nbsp; Edit</a>
+            <a class="list-group-item" href="#"><i class="fa fa-sign-out fa-fw" aria-hidden="true" [routerLink]="['']" (click)="logout()"></i>&nbsp; Logout</a>
+        </div>
+		<div class="text-end mt-2">
+			<button type="button" class="btn btn-outline-dark" (click)="offcanvas.close('Close click')">Close</button>
+		</div>
+	</div>
+</ng-template>

@@ -1,0 +1,76 @@
+<!-- <div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="checkLoggedInUser()">
+        <div class="login-container" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" [(ngModel)]="user.email">
+                         <div class="error">Invalid email!</div>
+                        <div class="error">Required!</div> 
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" [(ngModel)]="user.password">
+                        <div class="error">Required!</div> 
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button class="btn btn-success pull-right"  >Login</button>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">Wrong credentials!</div>
+                    <div class="alert alert-success">Login Successful!</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> -->
+
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="checkLoggedInUser()">
+      <div class="login-container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" formControlName="email" class="form-control">
+              <div *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched" class="error">
+                Email is required!
+              </div>
+              <div *ngIf="loginForm.get('email').hasError('email') && loginForm.get('email').touched" class="error">
+                Invalid email!
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" formControlName="password" class="form-control">
+              <div *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" class="error">
+                Password is required!
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success pull-right" [disabled]="loginForm.invalid">Login</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Add your error or success messages here -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
