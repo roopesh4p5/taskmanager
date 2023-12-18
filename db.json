@@ -4,13 +4,13 @@
       "id": 1,
       "title": "angular tasks",
       "description": "implementation of application",
-      "status": "Incompleted"
+      "status": "incomplete"
     },
     {
       "id": 2,
       "title": "angular tasks",
-      "description": "implementation of application",
-      "status": "Completed"
+      "description": "implementation of application edited",
+      "status": "incomplete"
     },
     {
       "id": 3,
@@ -71,6 +71,12 @@
       "description": "create apis for taskmanagement",
       "status": "Incompleted",
       "id": 12
+    },
+    {
+      "title": "test 1",
+      "description": "trial ",
+      "status": "Incomplete",
+      "id": 13
     }
   ]
 }

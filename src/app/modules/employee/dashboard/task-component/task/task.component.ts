@@ -12,57 +12,73 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class TaskComponent implements OnInit {
 
   allTasks: Task[] = [];
-  newTask: Task = new Task();
-  modal: any;
   selectedTask: Task | null = null;
-  taskForm !: FormGroup;
+  taskForm!: FormGroup;
+  isEditing = false;
 
-  @ViewChild('content', { static: true }) userInfoModal!: ElementRef;
-  @ViewChild('edit', { static: true }) editInfoModal!: ElementRef;
+  @ViewChild('content', { static: true }) contentModal!: ElementRef;
 
   constructor(private taskService: TaskService, private fb: FormBuilder, private modalService: NgbModal) { }
+
   ngOnInit(): void {
-    this.getTaskList()
+    this.getTaskList();
   }
 
   getTaskList() {
     this.taskService.getAllTasks().subscribe((res: any) => {
-      this.allTasks = res
-      console.log(this.allTasks)
-    })
+      this.allTasks = res;
+    });
   }
 
-  openModal(content: any, task : Task | null = null) {
+  openModal(content: any, task: Task | null = null) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       status: ['', Validators.required]
-    })
-    
+    });
 
-  // If a task is provided, prefill the form with its values
-  if (task) {
-    this.selectTaskForUpdate(task);
+    this.isEditing = !!task;
+
+    if (task) {
+      this.selectTaskForUpdate(task);
+    }
+
+    this.modalService.open(content);
   }
 
-  // Open the modal
-    this.modalService
-      .open(content);
+  performTaskAction() {
+    if (this.isEditing) {
+      this.updateTask();
+    } else {
+      this.addTask();
+    }
   }
 
+  closeModal() {
+    this.modalService.dismissAll();
+  }
 
   addTask() {
     if (this.taskForm.valid) {
       const newTask: Task = this.taskForm.value;
-      this.taskService.createNewTask(newTask).subscribe((res) => {
-        console.log('New task added:', res);
+      this.taskService.createNewTask(newTask).subscribe(() => {
         this.getTaskList();
+        this.closeModal();
         this.taskForm.reset();
       });
     }
   }
 
   selectTaskForUpdate(task: Task) {
+    if (!this.taskForm) {
+      this.taskForm = this.fb.group({
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        status: ['', Validators.required]
+      });
+    }
+
+    this.taskForm.reset();
     this.selectedTask = task;
     this.taskForm.patchValue({
       title: task.title,
@@ -72,18 +88,19 @@ export class TaskComponent implements OnInit {
   }
 
   openUpdate(task: Task) {
-    this.openModal(this.editInfoModal, task)
-    
+    this.openModal(this.contentModal, task);
   }
+
   updateTask() {
     if (this.taskForm.valid && this.selectedTask) {
       const updatedTask: Task = {
         ...this.selectedTask,
         ...this.taskForm.value,
       };
-      this.taskService.updateTask(updatedTask).subscribe((res) => {
-        console.log('Task updated:', res);
+
+      this.taskService.updateTask(updatedTask).subscribe(() => {
         this.getTaskList();
+        this.closeModal();
         this.taskForm.reset();
         this.selectedTask = null;
       });
@@ -92,9 +109,7 @@ export class TaskComponent implements OnInit {
 
   deleteTask(taskId: number) {
     this.taskService.deleteTask(taskId).subscribe(() => {
-      console.log('task deleted')
-      this.getTaskList()
-    })
+      this.getTaskList();
+    });
   }
 }
-
